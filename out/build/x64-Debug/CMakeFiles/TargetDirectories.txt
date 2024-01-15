@@ -1,0 +1,4 @@
+C:/Users/Thoma/OneDrive/Documents/UCSD/CSE169/CSE169_Starter_Windows/out/build/x64-Debug/CMakeFiles/menv.dir
+C:/Users/Thoma/OneDrive/Documents/UCSD/CSE169/CSE169_Starter_Windows/out/build/x64-Debug/CMakeFiles/CopyShaders.dir
+C:/Users/Thoma/OneDrive/Documents/UCSD/CSE169/CSE169_Starter_Windows/out/build/x64-Debug/CMakeFiles/edit_cache.dir
+C:/Users/Thoma/OneDrive/Documents/UCSD/CSE169/CSE169_Starter_Windows/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
