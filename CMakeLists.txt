@@ -3,25 +3,22 @@ cmake_minimum_required(VERSION 3.16)
 project(menv)
 
 # Add source files
-set(
-    SOURCES
-    main.cpp
-    src/Camera.cpp
-    src/Cube.cpp
-    src/Shader.cpp
-    src/Tokenizer.cpp
-    src/Window.cpp
-)
+# set(
+#     SOURCES
+#     main.cpp
+#     src/Camera.cpp
+#     src/Cube.cpp
+#     src/Shader.cpp
+#     src/Tokenizer.cpp
+#     src/Window.cpp
+# )
+# Find all source files in the "src" directory
+file(GLOB_RECURSE SOURCES "src/*.cpp" main.cpp)
 
 # Add header files
 set(
     HEADERS
-    include/core.h
-    include/Camera.h
-    include/Cube.h
-    include/Shader.h
-    include/Tokenizer.h
-    include/Window.h
+    
 )
 
 # Require GL
