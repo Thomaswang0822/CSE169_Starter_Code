@@ -1,0 +1,42 @@
+cmake_minimum_required(VERSION 3.16)
+
+project(menv)
+
+# Set C++ standard to 17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Add source files
+file(GLOB_RECURSE SOURCES "src/*.cpp" main.cpp)
+# This will not recursively find .cpp in subfolders, so
+# after you have imgui or other UI component, use
+# file(GLOB_RECURSE SOURCES "src/*.cpp" "imgui/*.cpp" "imgui/backend/*.cpp" main.cpp)
+
+# Add include directories
+include_directories(
+    include
+)
+
+# Find Homebrew prefix
+execute_process(COMMAND brew --prefix OUTPUT_VARIABLE BREW_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+set(BREW_INCLUDE_DIR "${BREW_PREFIX}/include")
+set(BREW_LIB_DIR "${BREW_PREFIX}/lib")
+
+# Add library directories
+link_directories(
+    ${BREW_LIB_DIR}
+)
+
+# Add executable
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+# Link libraries
+target_link_libraries(${PROJECT_NAME} "-framework OpenGL" glfw)
+
+# Move assets to correct path relative to .exe
+add_custom_target(CopyShaders ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${PROJECT_SOURCE_DIR}/shaders"
+    "${CMAKE_BINARY_DIR}/Debug/shaders"
+)
+add_dependencies(${PROJECT_NAME} CopyShaders)

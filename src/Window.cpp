@@ -59,6 +59,15 @@ GLFWwindow* Window::createWindow(int width, int height) {
     // 4x antialiasing.
     glfwWindowHint(GLFW_SAMPLES, 4);
 
+    // Apple implements its own version of OpenGL and requires special treatments
+    // to make it uses modern OpenGL.
+    // Ensure that minimum OpenGL version is 3.3
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    // Enable forward compatibility and allow a modern OpenGL context
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+
     // Create the GLFW window.
     GLFWwindow* window = glfwCreateWindow(width, height, windowTitle, NULL, NULL);
 
@@ -71,9 +80,6 @@ GLFWwindow* Window::createWindow(int width, int height) {
 
     // Make the context of the window.
     glfwMakeContextCurrent(window);
-
-    // Initialize GLEW
-    glewInit();
 
     // Set swap interval to 1.
     glfwSwapInterval(0);
@@ -93,6 +99,10 @@ GLFWwindow* Window::createWindow(int width, int height) {
 }
 
 void Window::resizeCallback(GLFWwindow* window, int width, int height) {
+#ifdef __APPLE__
+    // In case your Mac has a retina display.
+    glfwGetFramebufferSize(window, &width, &height);
+#endif
     Window::width = width;
     Window::height = height;
     // Set the viewport size.
