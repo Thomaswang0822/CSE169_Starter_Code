@@ -14,14 +14,6 @@ file(GLOB_RECURSE SOURCES "src/*.cpp" main.cpp)
 # after you have imgui or other UI component, use
 # file(GLOB_RECURSE SOURCES "src/*.cpp" "imgui/*.cpp" "imgui/backend/*.cpp" main.cpp)
 
-# Add header files
-set(
-    HEADERS
-)
-
-# Require GL
-find_package(OpenGL REQUIRED)
-
 # Add include directories
 include_directories(
     include
@@ -29,21 +21,26 @@ include_directories(
     # include/imgui
 )
 
+# Find Homebrew prefix
+execute_process(COMMAND brew --prefix OUTPUT_VARIABLE BREW_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+set(BREW_INCLUDE_DIR "${BREW_PREFIX}/include")
+set(BREW_LIB_DIR "${BREW_PREFIX}/lib")
+
 # Add library directories
 link_directories(
-    lib
+    ${BREW_LIB_DIR}
 )
 
 # Add executable
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Link libraries
-target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} glew32s.lib glfw3)
+target_link_libraries(${PROJECT_NAME} "-framework OpenGL" glfw)
 
 # Move assets to correct path relative to .exe
 add_custom_target(CopyShaders ALL
-	COMMAND ${CMAKE_COMMAND} -E copy_directory
-	"${PROJECT_SOURCE_DIR}/shaders"
-	"${CMAKE_BINARY_DIR}/Debug/shaders"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${PROJECT_SOURCE_DIR}/shaders"
+    "${CMAKE_BINARY_DIR}/shaders"
 )
 add_dependencies(${PROJECT_NAME} CopyShaders)

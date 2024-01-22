@@ -1,21 +1,35 @@
-## How to: install dependencies using homebrew
+# How to: install dependencies using homebrew
 
 ---
 
-1. install homebrew
+1. Install homebrew
+   a. Check if you have it already
+
+    ```terminal
+    $ brew -v
+    Homebrew 3.6.18
+    Homebrew/homebrew-core (......)
+    Homebrew/homebrew-cask (......)
     ```
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+   b. if not, install homebrew
+
+    ```terminal
+    curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
     ```
 
 2. install `glm` and `glfw`
-    ```
+
+    ```terminal
     brew install glm glfw
     ```
 
 3. check installation using
-    ```
+
+    ```terminal
     brew info glm glfw
     ```
+
     if you are on Intel chip (you can check this by `arch` in terminal, if it returns `i386`, you are), you should expect libraries installed in `/usr/local/...`. Otherwise, libraries should be installed in `/opt/homebrew/...`
 
-4. email TA Peter (bwu@ucsd.edu) for further complications during setup. 
+4. Contact your TA (Piazza or Lab hours) for further help.
