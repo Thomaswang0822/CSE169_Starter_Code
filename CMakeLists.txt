@@ -8,6 +8,9 @@ project(menv)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Suppress warnings
+add_compile_options(-Wno-deprecated-declarations)
+
 # Add source files
 file(GLOB_RECURSE SOURCES "src/*.cpp" main.cpp)
 # This will not recursively find .cpp in subfolders, so
@@ -33,6 +36,9 @@ link_directories(
 
 # Add executable
 add_executable(${PROJECT_NAME} ${SOURCES})
+
+# Find the GLFW3 library
+find_package(glfw3 REQUIRED)
 
 # Link libraries
 target_link_libraries(${PROJECT_NAME} "-framework OpenGL" glfw)

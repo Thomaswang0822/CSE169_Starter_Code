@@ -15,8 +15,15 @@
    b. if not, install homebrew
 
     ```terminal
-    curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     ```
+
+   c. And after the installation, make sure you run these commands in **Next steps**:
+
+   ```terminal
+   $ (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/leo/.zprofile 
+   $ eval "$(/opt/homebrew/bin/brew shellenv)"
+   ```
 
 2. install `glm` and `glfw`
 
