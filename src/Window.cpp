@@ -128,7 +128,7 @@ void Window::displayCallback(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render the object.
-    // cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
     ps->draw(Cam->GetViewProjectMtx(), Window::ptShaderProgram);
 
     // Gets events, including input such as keyboard and mouse or window resizing.

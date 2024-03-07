@@ -8,7 +8,7 @@ struct ParticleSystem
 public:
     // GL data
     GLuint VAO, VBO;
-    glm::mat4 model;
+    glm::mat4 model = glm::mat4(1.0f);
     glm::vec3 color;
 
     // data 
