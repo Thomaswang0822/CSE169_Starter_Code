@@ -7,6 +7,7 @@ const char* Window::windowTitle = "Model Environment";
 
 // Objects to render
 Cube* Window::cube;
+ParticleSystem* Window::ps;
 
 // Camera Properties
 Camera* Cam;
@@ -17,15 +18,21 @@ int MouseX, MouseY;
 
 // The shader program id
 GLuint Window::shaderProgram;
+GLuint Window::ptShaderProgram;
 
 // Constructors and desctructors
 bool Window::initializeProgram() {
     // Create a shader program with a vertex shader and a fragment shader.
     shaderProgram = LoadShaders("shaders/shader.vert", "shaders/shader.frag");
+    ptShaderProgram = LoadShaders("shaders/point.vert", "shaders/point.frag");
 
     // Check the shader program.
     if (!shaderProgram) {
         std::cerr << "Failed to initialize shader program" << std::endl;
+        return false;
+    }
+    if (!ptShaderProgram) {
+        std::cerr << "Failed to initialize point shader program" << std::endl;
         return false;
     }
 
@@ -35,7 +42,11 @@ bool Window::initializeProgram() {
 bool Window::initializeObjects() {
     // Create a cube
     cube = new Cube();
-    // cube = new Cube(glm::vec3(-1, 0, -2), glm::vec3(1, 1, 1));
+    // Let's draw one particle on each vertex of the cube
+    ps = new ParticleSystem(
+        cube->positions.size(),
+        cube->positions
+    );
 
     return true;
 }
@@ -43,9 +54,11 @@ bool Window::initializeObjects() {
 void Window::cleanUp() {
     // Deallcoate the objects.
     delete cube;
+    delete ps;
 
     // Delete the shader program.
     glDeleteProgram(shaderProgram);
+    glDeleteProgram(ptShaderProgram);
 }
 
 // for the Window
@@ -107,6 +120,7 @@ void Window::idleCallback() {
     Cam->Update();
 
     cube->update();
+    ps->update(glm::mat3(cube->model));
 }
 
 void Window::displayCallback(GLFWwindow* window) {
@@ -114,7 +128,8 @@ void Window::displayCallback(GLFWwindow* window) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // Render the object.
-    cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    // cube->draw(Cam->GetViewProjectMtx(), Window::shaderProgram);
+    ps->draw(Cam->GetViewProjectMtx(), Window::ptShaderProgram);
 
     // Gets events, including input such as keyboard and mouse or window resizing.
     glfwPollEvents();

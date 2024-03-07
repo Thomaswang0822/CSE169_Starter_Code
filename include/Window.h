@@ -2,6 +2,7 @@
 
 #include "Camera.h"
 #include "Cube.h"
+#include "ParticleSystem.h"
 #include "Shader.h"
 #include "core.h"
 
@@ -14,9 +15,11 @@ public:
 
     // Objects to render
     static Cube* cube;
+    static ParticleSystem* ps;
 
     // Shader Program
     static GLuint shaderProgram;
+    static GLuint ptShaderProgram;
 
     // Act as Constructors and desctructors
     static bool initializeProgram();
