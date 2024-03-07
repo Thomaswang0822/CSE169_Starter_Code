@@ -2,8 +2,9 @@
 
 ParticleSystem::ParticleSystem(int n, std::vector<glm::vec3> cubePos) {
     size = n;
-    positions.resize(n);
-    std::copy(cubePos.begin(), cubePos.begin() + size, positions.begin());
+    model = glm::mat4(1.0f);
+    positions = cubePos;
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 }
 
 ParticleSystem::~ParticleSystem() {
